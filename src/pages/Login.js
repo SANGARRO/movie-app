@@ -1,12 +1,22 @@
 import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implementar lógica de inicio de sesión
+    try {
+      await login(email, password);
+      // Redirige al usuario o actualiza el estado global aquí si es necesario
+      console.log("Login successful");
+    } catch (err) {
+      setError("Login failed. Please check your credentials.");
+      console.error("Login failed", err);
+    }
   };
 
   return (
@@ -26,6 +36,7 @@ const Login = () => {
         required
       />
       <button type="submit">Login</button>
+      {error && <p>{error}</p>}
     </form>
   );
 };

@@ -7,6 +7,7 @@ const Navbar = () => (
     <Link to="/favorites">Favorites</Link>
     <Link to="/login">Login</Link>
     <Link to="/register">Register</Link>
+    <Link to="/reset-password">Reset Password</Link>
   </nav>
 );
 
