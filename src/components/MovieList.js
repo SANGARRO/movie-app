@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../services/api";
+import { getTMDBMovies } from "../services/api"; // Importa la función adecuada desde api.js
 import MovieCard from "./MovieCard";
 
 const MovieList = ({ category }) => {
@@ -9,7 +9,7 @@ const MovieList = ({ category }) => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await api.get(`/movie/${category}`);
+        const response = await getTMDBMovies(); // Usa la función importada
         setMovies(response.data.results);
       } catch (err) {
         setError("Error fetching movies. Please try again later.");

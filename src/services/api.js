@@ -1,10 +1,7 @@
 import axios from "axios";
 
-const BACKEND_URL = "http://localhost:3000";
-
-const token = localStorage.getItem("token");
-
-const TMDB_API_KEY = "TU_API_KEY_DE_TMDB";
+const BACKEND_URL = "http://localhost:5432";
+const TMDB_API_KEY = "movies"; 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 const tmdbApi = axios.create({
@@ -16,6 +13,7 @@ const tmdbApi = axios.create({
 
 tmdbApi.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem("token"); 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -33,6 +31,7 @@ const backendApi = axios.create({
 
 backendApi.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

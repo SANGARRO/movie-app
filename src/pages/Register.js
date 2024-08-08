@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom"; // Importar useHistory para redireccionar
+import { useNavigate } from "react-router-dom"; // Importar useNavigate para redireccionar
 import { register } from "../services/api";
 
 const Register = () => {
@@ -7,7 +7,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const history = useHistory(); // Hook para redirigir
+  const navigate = useNavigate(); // Hook para redirigir
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ const Register = () => {
         setPassword("");
         setError("");
         // Redirigir al login después del registro exitoso
-        history.push("/login");
+        navigate("/login");
       }
     } catch (err) {
       setError("Registration failed. Please try again.");
