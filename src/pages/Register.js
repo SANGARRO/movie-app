@@ -1,32 +1,59 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom"; // Importar useHistory para redireccionar
+import { register } from "../services/api";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const history = useHistory(); // Hook para redirigir
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implementar lógica de registro
+    try {
+      const response = await register({ email, password });
+      if (response.status === 201) {
+        setSuccess("Registration successful! You can now log in.");
+        setEmail(""); // Limpiar el formulario
+        setPassword("");
+        setError("");
+        // Redirigir al login después del registro exitoso
+        history.push("/login");
+      }
+    } catch (err) {
+      setError("Registration failed. Please try again.");
+      console.error("Registration failed", err);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Register</button>
-    </form>
+    <div>
+      <h1>Register</h1>
+      <form onSubmit={handleSubmit} className="register-form">
+        <div>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+        </div>
+        <button type="submit">Register</button>
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">{success}</p>}
+      </form>
+    </div>
   );
 };
 

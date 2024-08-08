@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+import Movie from "./pages/Movie"; // Agregado Movie
 import Favorites from "./pages/Favorites";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -15,6 +16,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/movies/:id" element={<Movie />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
